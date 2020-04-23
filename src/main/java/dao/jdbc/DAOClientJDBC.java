@@ -7,16 +7,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import dao.DAOClient;
+import dao.DAOUtilisateur;
+import model.Utilisateur;
 import model.Client;
-import model.ClientA;
-import model.ClientNA;
+import model.Admin;
 import model.Site;
 
-public class DAOClientJDBC implements DAOClient {
+public class DAOClientJDBC implements DAOUtilisateur {
 
 
-	public void insert(ClientA c) {
+	public void insert(Client c) {
 
 		try (
 				Connection connect=Site.getInstance().getConnection();
@@ -34,8 +34,8 @@ public class DAOClientJDBC implements DAOClient {
 	}
 
 
-	public ClientA selectByAdresseMail(String adresseMail) {
-		ClientA c=null;
+	public Client selectByAdresseMail(String adresseMail) {
+		Client c=null;
 
 		try (
 				Connection connect=Site.getInstance().getConnection();
@@ -44,18 +44,18 @@ public class DAOClientJDBC implements DAOClient {
 			ps.setString(1,  adresseMail);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
-				c = new ClientA(rs.getInt("id"),rs.getString("login"),rs.getString("password"),rs.getString("adresseMail"));
+				c = new Client(rs.getInt("id"),rs.getString("login"),rs.getString("password"),rs.getString("adresseMail"));
 			}
 		}
 		catch(Exception e) {System.out.println("Erreur -> Vérification de l'adresse mail ne marche pas");}
 		return c;
 	}
-	public List<ClientA> selectAll() {
+	public List<Utilisateur> selectAll() {
 		//nope
 		return null;
 	}
 
-	public void update(ClientA c) {
+	public void update(Client c) {
 		//plus tard
 	}
 
@@ -63,8 +63,8 @@ public class DAOClientJDBC implements DAOClient {
 		//plus tard
 	}
 
-	public ClientA checkConnect(String login, String password) {
-		ClientA c = null;
+	public Client checkConnect(String login, String password) {
+		Client c = null;
 		try (
 				Connection connect=Site.getInstance().getConnection();
 				PreparedStatement ps = connect.prepareStatement("SELECT * FROM client WHERE login=? and password=?");
@@ -75,7 +75,7 @@ public class DAOClientJDBC implements DAOClient {
 			ResultSet rs = ps.executeQuery();
 
 			while(rs.next()) {
-				c = new ClientA(rs.getInt("id"),rs.getString("login"),rs.getString("password"),rs.getString("adresseMail"));}
+				c = new Client(rs.getInt("id"),rs.getString("login"),rs.getString("password"),rs.getString("adresseMail"));}
 		}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -84,7 +84,7 @@ public class DAOClientJDBC implements DAOClient {
 	}
 
 	@Override
-	public ClientA selectById(Integer id) {
+	public Client selectById(Integer id) {
 		//Pas recherche de client via l'id ..
 		return null;
 	}
@@ -106,8 +106,8 @@ public class DAOClientJDBC implements DAOClient {
 		catch(Exception e) {System.out.println("Erreur -> Client non ajouté");}
 	}
 
-	public ClientA checkMail(String mail) {
-		ClientA c = null;
+	public Client checkMail(String mail) {
+		Client c = null;
 		try (
 				Connection connect=Site.getInstance().getConnection();
 				PreparedStatement ps = connect.prepareStatement("SELECT * FROM client WHERE adresseMail=?");
@@ -115,7 +115,7 @@ public class DAOClientJDBC implements DAOClient {
 			ps.setString(1,  mail);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
-				c = new ClientA(rs.getInt("id"),rs.getString("login"),rs.getString("password"),rs.getString("adresseMail"));}
+				c = new Client(rs.getInt("id"),rs.getString("login"),rs.getString("password"),rs.getString("adresseMail"));}
 		}
 		catch(Exception e) {System.out.println("Erreur -> trycatch checkMail DAOClient");}
 		return c;
@@ -123,8 +123,22 @@ public class DAOClientJDBC implements DAOClient {
 
 
 	@Override
-	public ClientA selectByLoginPassword(String login, String password) {
+	public Client selectByLoginPassword(String login, String password) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+
+	@Override
+	public void insert(Utilisateur t) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void update(Utilisateur t) {
+		// TODO Auto-generated method stub
+		
 	}
 }

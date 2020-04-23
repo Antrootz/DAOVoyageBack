@@ -1,17 +1,23 @@
 package app;
 
-import dao.DAOClient;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
+import dao.DAOUtilisateur;
 import dao.jpa.DAOJpa;
-import model.ClientA;
+import model.Client;
 import model.Site;
 
 public class TestEmf {
 
-	public static void main(String[] args) {
-		DAOClient daoC = Site.getInstance().getDaoClient();
+	public static void main(String[] args) throws ClassNotFoundException {
 		
-		ClientA c = (ClientA) Site.getInstance().checkConnect("LeBizut", "ajc");
-		System.out.println(c);
+
+		DAOUtilisateur daoC = Site.getInstance().getDaoUtilisateur();
+		
+		Client c = new Client("jojo", "jj", "a@a.a");
+		Site.getInstance().getDaoUtilisateur().insert(c);
 		
 		
 		
@@ -23,9 +29,9 @@ public class TestEmf {
 //		daoPatient.insert(patient);
 //		daoVisite.insert(visite);
 
-		
 
-		DAOJpa.close();
+
+		//DAOJpa.close();
 		
 	
 	

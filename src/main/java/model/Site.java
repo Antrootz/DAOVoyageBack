@@ -6,11 +6,10 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-import dao.DAOClient;
+import dao.DAOUtilisateur;
 import dao.DAOVille;
-import dao.jdbc.DAOClientJDBC;
 import dao.jdbc.DAOVilleJDBC;
-import dao.jpa.DAOClientJPA;
+import dao.jpa.DAOUtilisateurJPA;
 import dao.jpa.DAOVilleJPA;
 
 public class Site {
@@ -20,7 +19,7 @@ public class Site {
 	private Connection connection = null;
 	private static Site _instance = null;
 
-	private static DAOClient daoC = null;
+	private static DAOUtilisateur daoC = null;
 	private static DAOVille daoV = null;
 
 	//-----------------------------------------------------//
@@ -57,8 +56,8 @@ public class Site {
 	//-----------------------------------------------------//
 	//-----------------------------------------------------//
 
-	public static DAOClient getDaoClient() {
-		if (daoC == null) {daoC = new DAOClientJPA();}	//Changer ici pour passer en JPA/JDBC
+	public static DAOUtilisateur getDaoUtilisateur() {
+		if (daoC == null) {daoC = new DAOUtilisateurJPA();}	//Changer ici pour passer en JPA/JDBC
 		return daoC;
 	}
 
@@ -74,16 +73,16 @@ public class Site {
 		return _instance;
 	}
 
-	public ClientA checkConnect(String login, String password) {
-		return getDaoClient().selectByLoginPassword(login, password);
+	public Utilisateur checkConnect(String login, String password) {
+		return getDaoUtilisateur().selectByLoginPassword(login, password);
 	}
 
-	public void inscription(ClientA c) {
-		getDaoClient().insert(c);
+	public void inscription(Utilisateur c) {
+		getDaoUtilisateur().insert(c);
 	}
 
-	public ClientA checkMail(String adresseMail) {
-		return getDaoClient().selectByAdresseMail(adresseMail);
+	public Utilisateur checkMail(String adresseMail) {
+		return getDaoUtilisateur().selectByAdresseMail(adresseMail);
 	}
 
 	public void research(Ville v1){

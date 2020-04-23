@@ -6,9 +6,9 @@ import java.util.Scanner;
 
 import dao.jdbc.DAOClientJDBC;
 import dao.jdbc.DAOVilleJDBC;
+import model.Utilisateur;
 import model.Client;
-import model.ClientA;
-import model.ClientNA;
+import model.Admin;
 import model.Site;
 import model.Transport;
 import model.Ville;
@@ -16,7 +16,7 @@ import model.Voyage;
 
 public class Test {
 
-	static Client c = null;
+	static Utilisateur c = null;
 
 	public static String saisieString (String msg) {
 		Scanner sc = new Scanner(System.in);
@@ -44,7 +44,7 @@ public class Test {
 	}
 
 	public static void accueil() {
-		c = new ClientNA();
+		c = new Admin();
 		System.out.println("Bienvenue sur LE site de voyage.");
 		System.out.println("Connectez-vous pour profitez d'une remise de 20% sur tous vos voyages.");
 		System.out.println("1 - Pas encore inscrit ? Faites-le au plus vite !");
@@ -83,7 +83,7 @@ public class Test {
 			c = Site.getInstance().checkConnect(login, password);
 			recherche();
 		} else {
-			System.out.println("Cette adresse mail est déjà utilisée. Login : "+((ClientA) c).getLogin());
+			System.out.println("Cette adresse mail est déjà utilisée. Login : "+((Client) c).getLogin());
 			connect();
 		}	
 	}
@@ -158,7 +158,7 @@ public class Test {
 				somme = somme + v.getPrix();
 			}
 			System.out.println("Prix total : "+(int) somme+"€.");
-			if (c instanceof ClientA) {
+			if (c instanceof Client) {
 				somme = somme-somme*20/100;
 				System.out.println("Remise de 20%. Nouveau prix :"+(int) somme+"€.");
 			}
