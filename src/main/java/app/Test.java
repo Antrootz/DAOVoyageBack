@@ -141,7 +141,7 @@ public class Test {
 		String s = saisieString("\nVoulez-vous choisir un des voyages à ajouter au panier ? (O/R (refaire une recherche) /Q (quitter))");
 		if (s.equals("O")) {
 			int n = saisieInt("Numéro du voyage ?");
-			Voyage vChoisi = Site.getInstance().getRecherche().get(n-1);
+			Voyage vChoisi = Site.getInstance().getVoyage().get(n-1);
 			Site.getInstance().choix(vChoisi);
 		} else if (s.equals("R")) {recherche();}
 		else {accueil();}
