@@ -1,10 +1,29 @@
 package model;
 
-public class Ville {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "ville")
+public class Ville {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
     private int id;
+	
+	@Column(name = "nom")
     private String nom;
-    private double longitude,latitude;
+    
+	@Column(name = "longitude")    
+    private double longitude;
+    
+	@Column(name = "latitude")
+    private double latitude;
 
     public Ville(int id, String nom, double longitude, double latitude) {
         this.id = id;
@@ -13,6 +32,10 @@ public class Ville {
         this.latitude = latitude;
     }
 
+    public Ville() {
+    	
+    }
+    
     public int getId() {
         return id;
     }

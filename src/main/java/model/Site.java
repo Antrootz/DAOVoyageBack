@@ -10,17 +10,29 @@ import dao.DAOClient;
 import dao.DAOVille;
 import dao.jdbc.DAOClientJDBC;
 import dao.jdbc.DAOVilleJDBC;
+import dao.jpa.DAOClientJPA;
+import dao.jpa.DAOVilleJPA;
 
 public class Site {
 
-    LinkedList<Voyage> voyage = new LinkedList();
-    LinkedList<Voyage> panier = new LinkedList();
+    LinkedList<Voyage> voyage = new LinkedList<>();
+    LinkedList<Voyage> panier = new LinkedList<>();
     private Connection connection=null;
     private static Site _instance=null;
     
-    private DAOClient daoC = new DAOClientJDBC();
-    private DAOVille daoV = new DAOVilleJDBC();
-
+    private static DAOClient daoC;
+    private static DAOVille daoV;
+	
+	public static DAOClient getDaoClient() {
+		if (daoC == null) {daoC = new DAOClientJPA();}			//Changer ici pour passer en JPA/JDBC
+		return daoC;
+	}
+	
+	public static DAOVille getDaoVille() {
+		if (daoV == null) {daoV = new DAOVilleJPA();}			//Changer ici pour passer en JPA/JDBC
+		return daoV;
+	}
+    
     private Site() {
     }
 
@@ -67,13 +79,11 @@ public class Site {
     }
 
     public Client checkConnect(String login, String password) {
-        DAOClientJDBC daoC = new DAOClientJDBC();
         Client c = daoC.checkConnect(login, password);
         return c;
     }
     
     public void listVilleDispo() {
-    	DAOVilleJDBC daoV = new DAOVilleJDBC();
 		List<Ville> ville = daoV.selectAll();
 		int i = 0;
 		for (Ville v : ville) {
@@ -83,13 +93,11 @@ public class Site {
     }
     
     public void inscription(ClientA c) {
-        DAOClientJDBC daoC = new DAOClientJDBC();
         daoC.insert(c);
     }
     
     public void research(Ville v1){
 
-        DAOVilleJDBC daoV = new DAOVilleJDBC();
         List<Ville> ville = daoV.selectAll();
 
         for(Ville v2 : ville)

@@ -1,9 +1,29 @@
 package model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "client")
 public class ClientA extends Client {
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	private int id;
-	private String login, password, adresseMail;
+	
+	@Column(name = "login")
+	private String login;
+	
+	@Column(name = "password")
+	private String password;
+	
+	@Column(name = "adresse_mail")
+	private String adresseMail;
 	
 	//---------------------------------------------------------//
 	//---------------------------------------------------------//
@@ -15,6 +35,16 @@ public class ClientA extends Client {
 		this.login = login;
 		this.password = password;
 		this.adresseMail = adresseMail;
+	}
+	
+	public ClientA(String login, String password, String adresseMail) {
+		this.login = login;
+		this.password = password;
+		this.adresseMail = adresseMail;
+	}
+	
+	public ClientA() {
+		
 	}
 	
 	//---------------------------------------------------------//

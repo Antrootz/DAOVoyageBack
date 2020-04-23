@@ -24,6 +24,10 @@ public class Voyage {
         duree = calculDureeHMin(v1,v2,t);
     }
 
+    public Voyage() {
+    	
+    }
+    
     public Ville getV1() {
         return v1;
     }
