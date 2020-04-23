@@ -44,7 +44,7 @@ public class DAOClientJPA extends DAOJpa implements DAOClient {
 		try {
 			ClientA ClientAToRemove = new ClientA();
 			ClientAToRemove.setId(id);
-			
+
 			this.em.getTransaction().begin();
 			this.em.remove(this.em.merge(ClientAToRemove));		//On attache car le ClientA n'est pas attaché
 			this.em.getTransaction().commit();
@@ -54,32 +54,16 @@ public class DAOClientJPA extends DAOJpa implements DAOClient {
 
 	@Override
 	public ClientA selectByAdresseMail(String adresseMail) {
-		return this.em.createQuery("select c from ClientA c where c.adresseMail=?1", ClientA.class).setParameter(1, adresseMail).getSingleResult();
-	}
-
-	@Override
-	public ClientA checkConnect(String login, String password) {
-		ClientA c = null;
-		c = this.em.createQuery("select c from ClientA c where c.login=?1 and c.password=?2", ClientA.class).setParameter(1, login).setParameter(2, password).getSingleResult();
-		return c;
-	}
-
-	@Override
-	public void inscription(String login, String password, String adresseMail) {
-		ClientA c = new ClientA(login,password,adresseMail);
 		try {
-			this.em.getTransaction().begin();		//On pense à démarrer la transaction
-			this.em.persist(c);
-			this.em.getTransaction().commit();		//On pense à commit la transaction
-		}
-		catch (Exception e) {this.em.getTransaction().rollback();System.out.println("insert ClientA pas marcher");}
+			return this.em.createQuery("select c from ClientA c where c.adresseMail=?1", ClientA.class).setParameter(1, adresseMail).getSingleResult();
+		} catch (Exception e) {return null;}
 	}
 
 	@Override
-	public ClientA checkMail(String adresseMail) {
-		ClientA c = null;
-		c = this.em.createQuery("select c from ClientA c where c.adresseMail=?1", ClientA.class).setParameter(1, adresseMail).getSingleResult();
-		return c;
+	public ClientA selectByLoginPassword(String login, String password) {
+		try {
+			return this.em.createQuery("select c from ClientA c where c.login=?1 and c.password=?2", ClientA.class).setParameter(1, login).setParameter(2, password).getSingleResult();
+		} catch (Exception e) {return null;}
 	}
 
 }

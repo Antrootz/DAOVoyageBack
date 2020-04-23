@@ -43,7 +43,7 @@ public class DAOVilleJPA extends DAOJpa implements DAOVille {
 		try {
 			Ville VilleToRemove = new Ville();
 			VilleToRemove.setId(id);
-			
+
 			this.em.getTransaction().begin();
 			this.em.remove(this.em.merge(VilleToRemove));		//On attache car le Ville n'est pas attaché
 			this.em.getTransaction().commit();
@@ -53,7 +53,9 @@ public class DAOVilleJPA extends DAOJpa implements DAOVille {
 
 	@Override
 	public Ville selectByNom(String nom) {
-		return this.em.createQuery("select v from Ville v where v.nom=?1", Ville.class).setParameter(1, nom).getSingleResult();
+		try {
+			return this.em.createQuery("select v from Ville v where v.nom=?1", Ville.class).setParameter(1, nom).getSingleResult();
+		} catch (Exception e) {return null;}
 	}
-	
+
 }

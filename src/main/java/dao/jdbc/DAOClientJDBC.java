@@ -120,4 +120,11 @@ public class DAOClientJDBC implements DAOClient {
 		catch(Exception e) {System.out.println("Erreur -> trycatch checkMail DAOClient");}
 		return c;
 	}
+
+
+	@Override
+	public ClientA selectByLoginPassword(String login, String password) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
